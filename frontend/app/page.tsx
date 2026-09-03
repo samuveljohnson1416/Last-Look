@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import EvidencePanel from "./EvidencePanel";
 
 const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -145,6 +146,8 @@ export default function ControlRoom() {
           <div className="whatif">{data.whatif}</div>
         </>
       )}
+
+      <EvidencePanel />
 
       <div className="audit">
         <div className="panel">
