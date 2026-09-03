@@ -10,3 +10,6 @@ venv/
 # node
 node_modules/
 .next/
+
+# IDE / AI tools
+.claude/
