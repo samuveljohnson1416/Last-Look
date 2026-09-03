@@ -1,0 +1,12 @@
+# secrets — never commit real creds
+.env
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# node
+node_modules/
+.next/

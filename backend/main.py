@@ -1,5 +1,8 @@
 """Last Look API. /analyze runs the read-only chain; /authorize is the only
 write path (human-gated) and annotates Grafana."""
+from dotenv import load_dotenv
+load_dotenv()  # read backend/.env before anything touches os.environ
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel

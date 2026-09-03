@@ -8,6 +8,8 @@ Prometheus/Loki data at runtime (the Grafana-track requirement). Wire the
 endpoint + token via .env -- see .env.example.
 """
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 from google.adk.agents import LlmAgent, SequentialAgent
 from google.adk.tools.mcp_tool.mcp_toolset import McpToolset, StreamableHTTPServerParams
