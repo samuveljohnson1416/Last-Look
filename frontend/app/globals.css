@@ -78,3 +78,10 @@ body {
 .evidence { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 @media (max-width: 900px) { .evidence { grid-template-columns: 1fr; } }
 .ev-cap { color: var(--muted); font-size: 12px; margin-bottom: 6px; }
+
+.tag { font-size: 10px; color: var(--amber); border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px; margin-left: 8px; letter-spacing: 0.3px; text-transform: none; }
+.trace { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 900px) { .trace { grid-template-columns: 1fr; } }
+.agent { background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+.agent-h { color: var(--amber); font-size: 12px; font-weight: 600; margin-bottom: 8px; }
+.agent pre { margin: 0; white-space: pre-wrap; font-size: 12px; line-height: 1.5; color: var(--ink); font-family: inherit; max-height: 320px; overflow-y: auto; }

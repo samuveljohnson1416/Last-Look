@@ -11,9 +11,10 @@ import base64
 import logging
 import os
 
+from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()  # repo-root .env (walked up from cwd)
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")  # always the repo-root .env
 
 # --- Grafana Cloud OTLP basic auth from instance id + token ----------------
 endpoint = os.environ["OTLP_ENDPOINT"].rstrip("/")

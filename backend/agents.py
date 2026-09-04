@@ -8,8 +8,9 @@ The Watcher/Analyst investigate through the official Grafana Cloud MCP server
 track's runtime requirement (proven: 74 tools registered against the stack).
 """
 import os
+from pathlib import Path
 from dotenv import load_dotenv
-load_dotenv()
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")  # always the repo-root .env
 
 from google.adk.agents import LlmAgent, SequentialAgent
 from google.adk.tools.mcp_tool.mcp_toolset import McpToolset, StdioConnectionParams

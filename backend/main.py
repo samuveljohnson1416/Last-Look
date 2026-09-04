@@ -1,7 +1,8 @@
 """Last Look API. /analyze runs the read-only chain; /authorize is the only
 write path (human-gated) and annotates Grafana."""
+from pathlib import Path
 from dotenv import load_dotenv
-load_dotenv()  # read backend/.env before anything touches os.environ
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")  # always the repo-root .env
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -9,6 +10,7 @@ from pydantic import BaseModel
 
 from impact import Assumptions, assess, options, whatif_B_denied
 from executor import annotate
+from investigate import get_cached
 
 app = FastAPI(title="Last Look")
 
@@ -29,6 +31,14 @@ def metrics():
 @app.post("/analyze")
 def analyze(a: Assumptions = Assumptions()):
     return {"impact": assess(a), "options": options(a), "whatif": whatif_B_denied(a)}
+
+
+@app.get("/investigate")
+def investigate():
+    # the live Watcher->Analyst->Advisor result (via Grafana MCP + Gemini),
+    # cached by `python investigate.py`; served fast and reliably here.
+    c = get_cached()
+    return {"findings": c or {}, "cached": c is not None}
 
 
 class Decision(BaseModel):
