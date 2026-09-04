@@ -17,7 +17,7 @@ from google.adk.runners import InMemoryRunner
 from google.genai import types
 from google.genai import errors as genai_errors
 
-from agents import pipeline
+from agents import investigator
 
 APP = "lastlook"
 CACHE = Path(__file__).resolve().parent / "last_investigation.json"
@@ -26,11 +26,13 @@ TRIGGER = (
     "Grafana metrics and logs, then report: the spec mismatches, the root cause, "
     "the historical pattern, the festival cascade risk, and recommended options.")
 
-_TRANSIENT = (genai_errors.APIError, aiohttp.ClientError, OSError, asyncio.TimeoutError)
+# Retry ONLY on 503/network (ServerError is 5xx) -- never on 429, because the
+# free tier is 20 calls/day/model and retrying a quota error just burns the day.
+_TRANSIENT = (genai_errors.ServerError, aiohttp.ClientError, OSError, asyncio.TimeoutError)
 
 
 async def _run_once(user: str) -> dict:
-    runner = InMemoryRunner(agent=pipeline, app_name=APP)
+    runner = InMemoryRunner(agent=investigator, app_name=APP)
     session = await runner.session_service.create_session(app_name=APP, user_id=user)
     msg = types.Content(role="user", parts=[types.Part(text=TRIGGER)])
     outputs: dict[str, str] = {}
@@ -42,7 +44,7 @@ async def _run_once(user: str) -> dict:
     return outputs
 
 
-async def run_investigation(user: str = "postprod_supervisor_01", attempts: int = 5) -> dict:
+async def run_investigation(user: str = "postprod_supervisor_01", attempts: int = 2) -> dict:
     last: Exception | None = None
     for i in range(attempts):
         try:

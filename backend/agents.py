@@ -71,3 +71,28 @@ advisor = LlmAgent(
 )
 
 pipeline = SequentialAgent(name="lastlook", sub_agents=[watcher, analyst, advisor])
+
+# Single-agent path used for live runs: the 3-agent chain makes ~10 Gemini
+# calls, which the free tier reliably 503s / quota-caps; this does the same job
+# in ~4 calls (one Prometheus query, one Loki query, one report), so a live
+# investigation actually completes. Same tools, same MCP, same reasoning.
+investigator = LlmAgent(
+    name="investigator", model=MODEL, tools=[grafana_mcp],
+    instruction=(
+        "You are the Last Look festival-delivery compliance agent. A DCP failed "
+        "festival QC before its Berlinale deadline. Investigate with the Grafana "
+        "tools, making as FEW calls as possible:\n"
+        "1) ONE query_prometheus call for these gauges: dcp_audio_channels, "
+        "dcp_subtitle_timing_drift_ms, dcp_resolution_width, dcp_resolution_height, "
+        "dcp_export_progress_pct, festival_deadline_hours_remaining.\n"
+        "2) ONE query_loki_logs call for {service_name=\"dcp-exporter\"} to read the "
+        "export preset and QC error codes.\n"
+        "Then write a concise report with these exact sections:\n"
+        "DETECTION: each spec mismatch vs required (audio 7.1, subtitle drift 0ms, "
+        "resolution 2048x858).\n"
+        "ROOT CAUSE: e.g. wrong export preset DCP_5.1_Standard.\n"
+        "PATTERN: how many AUDIO_CHANNEL_MISMATCH occurrences you found.\n"
+        "CASCADE: missing the Berlinale deadline forfeits the paid slot and slips "
+        "the festival run ~6 months, delaying any distribution deal.\n"
+        "RECOMMENDATION: re-export with the correct 7.1 spec and rush delivery."),
+)
