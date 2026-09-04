@@ -12,15 +12,18 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from google.adk.agents import LlmAgent, SequentialAgent
-from google.adk.tools.mcp_tool.mcp_toolset import McpToolset, StreamableHTTPServerParams
+from google.adk.tools.mcp_tool.mcp_toolset import McpToolset, StreamableHTTPConnectionParams
 
 MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 
 # --- Grafana Cloud MCP (metrics/logs/annotations) --------------------------
+_grafana_mcp_url = os.getenv("GRAFANA_MCP_URL") or (os.getenv("GRAFANA_URL", "").rstrip("/") + "/api/mcp")
+_grafana_token = os.getenv("GRAFANA_MCP_TOKEN", "")
+
 grafana_mcp = McpToolset(
-    connection_params=StreamableHTTPServerParams(
-        url=os.environ["GRAFANA_MCP_URL"],
-        headers={"Authorization": "Bearer " + os.environ["GRAFANA_MCP_TOKEN"]},
+    connection_params=StreamableHTTPConnectionParams(
+        url=_grafana_mcp_url,
+        headers={"Authorization": "Bearer " + _grafana_token},
     )
 )
 

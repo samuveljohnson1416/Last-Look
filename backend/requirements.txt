@@ -4,3 +4,5 @@ pydantic
 python-dotenv
 google-adk>=1.0
 google-genai
+mcp
+opentelemetry-exporter-otlp-proto-http==1.42.1
