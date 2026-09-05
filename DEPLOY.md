@@ -29,10 +29,13 @@ ADK/MCP stack (that's only for capturing an investigation with
 1. vercel.com → **Add New → Project** → import the `Last-Look` repo.
 2. Settings:
    - **Root Directory:** `frontend`
-   - Framework: Next.js (auto)
+   - Framework: Vite (auto) · Build: `npm run build` · Output: `dist`
 3. **Environment variable:**
-   - `NEXT_PUBLIC_API_URL` = your Render backend URL (from step 1, no trailing slash)
+   - `VITE_BACKEND_URL` = your Render backend URL (from step 1, no trailing slash)
 4. Deploy → the `*.vercel.app` URL is the **hosted Project URL** you submit.
+
+> The frontend also ships its own `Dockerfile` + `nginx.conf`, so it can
+> alternatively deploy as a static container on Render.
 
 ## 3. Capture the agent investigation (optional but recommended)
 

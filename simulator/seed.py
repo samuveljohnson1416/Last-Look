@@ -33,18 +33,22 @@ from opentelemetry.sdk._logs.export import BatchLogRecordProcessor
 from opentelemetry.exporter.otlp.proto.http._log_exporter import OTLPLogExporter
 from opentelemetry.sdk.resources import Resource
 
+# --- derive the incident from the REAL delivered DCP package ---------------
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend"))
+import dcp_ingest
+
+_pkg = dcp_ingest.ingest()  # parses the sample-input DCP + festival spec
+
 RES = Resource.create({
     "service.name": "dcp-exporter",
-    "film": "The Last Harvest",
-    "festival": "Berlinale",
+    "film": _pkg["film"],
+    "festival": _pkg["festival"],
 })
 
-# The incident. Expected spec lives in the agent; here we push the ACTUALS.
+# Metrics PARSED from the package (no hand-typed values), plus delivery state.
 METRICS = {
-    "dcp_audio_channels": 5.1,             # expected 7.1
-    "dcp_subtitle_timing_drift_ms": 200.0,  # expected 0
-    "dcp_resolution_width": 1920.0,         # expected 2048
-    "dcp_resolution_height": 1080.0,        # expected 858
+    **_pkg["metrics"],
     "dcp_export_progress_pct": 100.0,
     "festival_deadline_hours_remaining": 72.0,
 }
@@ -70,7 +74,7 @@ def push_logs() -> None:
     log.addHandler(LoggingHandler(logger_provider=lp))
 
     # current incident
-    log.info("export complete preset=DCP_5.1_Standard codec=jpeg2000 duration=95m")
+    log.info(f"export complete preset={_pkg['export_preset']} codec=jpeg2000 duration=95m")
     log.error("QC error=AUDIO_CHANNEL_MISMATCH expected=7.1 actual=5.1")
     log.error("QC error=SUBTITLE_DRIFT drift_ms=200")
     log.error("QC error=RESOLUTION_MISMATCH expected=2048x858 actual=1920x1080")

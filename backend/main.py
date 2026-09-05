@@ -59,8 +59,8 @@ class Decision(BaseModel):
     option_id: int | None = None
     approved_by: str | None = None
     approver: str | None = None
-    film: str = "The Last Harvest"
-    festival: str = "Festival de Cannes 2026"
+    film: str | None = None
+    festival: str | None = None
 
 
 @app.post("/authorize")
@@ -69,4 +69,6 @@ def authorize(d: Decision):
     who = (d.approved_by or d.approver or "").strip()
     if opt not in {"A", "B", "C"} or not who:
         raise HTTPException(400, "invalid authorization")  # empty/invalid => nothing happens
-    return annotate({"option": opt, "approved_by": who, "film": d.film, "festival": d.festival})
+    pkg = ingest_dcp()  # real film/festival from the delivered package
+    return annotate({"option": opt, "approved_by": who,
+                     "film": d.film or pkg["film"], "festival": d.festival or pkg["festival"]})
