@@ -1,0 +1,7 @@
+# Minimal deps to SERVE the API (impact model, cached investigation, Grafana
+# annotations). The agent/MCP stack in requirements.txt is only needed to
+# CAPTURE an investigation (python investigate.py), not to serve it.
+fastapi
+uvicorn[standard]
+pydantic
+python-dotenv
