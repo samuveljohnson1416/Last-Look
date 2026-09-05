@@ -1,0 +1,11 @@
+{
+  "_comment": "Festival technical delivery specification — what the DCP is validated AGAINST. Published by the festival to filmmakers.",
+  "festival": "Berlinale (Berlin International Film Festival)",
+  "deadline": "2026-01-28T14:00:00+01:00",
+  "premiere_status": "World Premiere required",
+  "required": {
+    "picture": { "width": 2048, "height": 858, "color_space": "XYZ", "frame_rate": 24 },
+    "audio": { "channels": "7.1", "channel_count": 8 },
+    "subtitles": { "timing_drift_ms": 0 }
+  }
+}

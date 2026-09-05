@@ -11,6 +11,8 @@ from pydantic import BaseModel
 from impact import Assumptions, assess, options, whatif_B_denied
 from executor import annotate
 from investigate import get_cached
+from dcp_ingest import ingest as ingest_dcp
+from live_metrics import read as read_metrics
 
 app = FastAPI(title="Last Look")
 
@@ -24,8 +26,17 @@ app.add_middleware(
 
 @app.get("/metrics")
 def metrics():
-    # Snapshot the UI polls for the countdown / QC light. Wired to Grafana on Day 2.
-    return {"source": "grafana", "note": "stub -- replace with live Prometheus query"}
+    # Real DCP QC metrics read live from Grafana Cloud Prometheus.
+    try:
+        return read_metrics()
+    except Exception as e:  # keep health check alive if Grafana is unreachable
+        return {"source": "grafana", "qc": "unknown", "metrics": {}, "error": str(e)[:200]}
+
+
+@app.get("/ingest")
+def ingest():
+    # Parse the delivered DCP package (delivered specs vs festival requirement).
+    return ingest_dcp()
 
 
 @app.post("/analyze")
@@ -42,14 +53,20 @@ def investigate():
 
 
 class Decision(BaseModel):
-    option: str            # "A" | "B" | "C"
-    approved_by: str
-    film: str
-    festival: str
+    # accepts either the {option A/B/C, approved_by} shape or the frontend's
+    # {option_id 1/2/3, approver} shape
+    option: str | None = None
+    option_id: int | None = None
+    approved_by: str | None = None
+    approver: str | None = None
+    film: str = "The Last Harvest"
+    festival: str = "Festival de Cannes 2026"
 
 
 @app.post("/authorize")
 def authorize(d: Decision):
-    if d.option not in {"A", "B", "C"} or not d.approved_by.strip():
+    opt = d.option or {1: "A", 2: "B", 3: "C"}.get(d.option_id or 0)
+    who = (d.approved_by or d.approver or "").strip()
+    if opt not in {"A", "B", "C"} or not who:
         raise HTTPException(400, "invalid authorization")  # empty/invalid => nothing happens
-    return annotate(d.model_dump())
+    return annotate({"option": opt, "approved_by": who, "film": d.film, "festival": d.festival})

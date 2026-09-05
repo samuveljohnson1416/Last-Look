@@ -1,0 +1,15 @@
+{
+  "_comment": "Mastering-house QC report shipped alongside the DCP (as EasyDCP / CineAsset / Colorfront tools produce). Carries the MEASURED technical specs from the MXF essence — this is what an editor/mastering team hands the delivery coordinator.",
+  "tool": "EasyDCP QC 4.2",
+  "package": "The_Last_Harvest_DCP",
+  "composition": "The Last Harvest — Berlinale Delivery Master",
+  "export_preset": "DCP_5.1_Standard",
+  "generated": "2026-01-26T09:20:00+01:00",
+  "measured": {
+    "picture": { "width": 1920, "height": 1080, "frame_rate": 24, "color_space": "REC709", "bit_depth": 10 },
+    "audio": { "channels": "5.1", "channel_count": 6, "layout": "L R C LFE Ls Rs", "sample_rate": 48000 },
+    "subtitles": { "present": true, "format": "SMPTE-TT", "language": "de", "timing_drift_ms": 200 }
+  },
+  "hash_check": "PASS",
+  "structure_check": "PASS"
+}

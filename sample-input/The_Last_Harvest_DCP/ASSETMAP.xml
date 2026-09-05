@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ASSETMAP: maps every asset UUID in the DCP to its file on disk.
+     First thing a QC/ingest tool reads. SMPTE ST 429-9. -->
+<AssetMap xmlns="http://www.smpte-ra.org/schemas/429-9/2007/AM">
+  <Id>urn:uuid:5f1a3b20-9c4e-4a11-8d21-0a1b2c3d4e5f</Id>
+  <Creator>PremierePost Mastering — EasyDCP Creator 4.2</Creator>
+  <VolumeCount>1</VolumeCount>
+  <IssueDate>2026-01-26T09:14:00+01:00</IssueDate>
+  <Issuer>PremierePost Mastering</Issuer>
+  <AssetList>
+    <Asset>
+      <Id>urn:uuid:11111111-aaaa-4bbb-8ccc-000000000001</Id>
+      <PackingList>true</PackingList>
+      <ChunkList><Chunk><Path>PKL.xml</Path></Chunk></ChunkList>
+    </Asset>
+    <Asset>
+      <Id>urn:uuid:22222222-aaaa-4bbb-8ccc-000000000002</Id>
+      <ChunkList><Chunk><Path>CPL_TheLastHarvest.xml</Path></Chunk></ChunkList>
+    </Asset>
+    <Asset>
+      <Id>urn:uuid:33333333-pic0-4bbb-8ccc-000000000003</Id>
+      <ChunkList><Chunk><Path>TheLastHarvest_picture.mxf</Path></Chunk></ChunkList>
+    </Asset>
+    <Asset>
+      <Id>urn:uuid:44444444-snd0-4bbb-8ccc-000000000004</Id>
+      <ChunkList><Chunk><Path>TheLastHarvest_audio.mxf</Path></Chunk></ChunkList>
+    </Asset>
+    <Asset>
+      <Id>urn:uuid:55555555-sub0-4bbb-8ccc-000000000005</Id>
+      <ChunkList><Chunk><Path>TheLastHarvest_subtitle.mxf</Path></Chunk></ChunkList>
+    </Asset>
+  </AssetList>
+</AssetMap>

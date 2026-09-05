@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Composition Playlist: the heart of the DCP. Describes the composition —
+     title, content kind, and the reels with their picture / sound / subtitle
+     assets, edit rate (frame rate) and intended screen aspect. SMPTE ST 429-7. -->
+<CompositionPlaylist xmlns="http://www.smpte-ra.org/schemas/429-7/2006/CPL">
+  <Id>urn:uuid:22222222-aaaa-4bbb-8ccc-000000000002</Id>
+  <IssueDate>2026-01-26T09:12:00+01:00</IssueDate>
+  <Issuer>PremierePost Mastering</Issuer>
+  <Creator>EasyDCP Creator 4.2</Creator>
+  <ContentTitleText>The Last Harvest — Berlinale Delivery Master</ContentTitleText>
+  <ContentKind>feature</ContentKind>
+  <ContentVersion>
+    <Id>urn:uuid:9a9a9a9a-0001-4bbb-8ccc-berlinale2026</Id>
+    <LabelText>The Last Harvest v2.4 — Festival Master</LabelText>
+  </ContentVersion>
+  <ReelList>
+    <Reel>
+      <Id>urn:uuid:66666666-reel-4bbb-8ccc-000000000006</Id>
+      <AssetList>
+        <MainPicture>
+          <Id>urn:uuid:33333333-pic0-4bbb-8ccc-000000000003</Id>
+          <EditRate>24 1</EditRate>
+          <IntrinsicDuration>136800</IntrinsicDuration>
+          <FrameRate>24 1</FrameRate>
+          <ScreenAspectRatio>2048 858</ScreenAspectRatio>
+        </MainPicture>
+        <MainSound>
+          <Id>urn:uuid:44444444-snd0-4bbb-8ccc-000000000004</Id>
+          <EditRate>24 1</EditRate>
+          <IntrinsicDuration>136800</IntrinsicDuration>
+          <Language>en</Language>
+        </MainSound>
+        <MainSubtitle>
+          <Id>urn:uuid:55555555-sub0-4bbb-8ccc-000000000005</Id>
+          <EditRate>24 1</EditRate>
+          <IntrinsicDuration>136800</IntrinsicDuration>
+          <Language>de</Language>
+        </MainSubtitle>
+      </AssetList>
+    </Reel>
+  </ReelList>
+</CompositionPlaylist>

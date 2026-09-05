@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Packing List: every asset with its type, size and SHA-1 hash.
+     QC tools verify these hashes on ingest. SMPTE ST 429-8. -->
+<PackingList xmlns="http://www.smpte-ra.org/schemas/429-8/2007/PKL">
+  <Id>urn:uuid:11111111-aaaa-4bbb-8ccc-000000000001</Id>
+  <IssueDate>2026-01-26T09:14:00+01:00</IssueDate>
+  <Issuer>PremierePost Mastering</Issuer>
+  <Creator>EasyDCP Creator 4.2</Creator>
+  <AssetList>
+    <Asset>
+      <Id>urn:uuid:22222222-aaaa-4bbb-8ccc-000000000002</Id>
+      <Hash>Yd8s2Fq0Wc1mE7kR3pB9tN6vX4A=</Hash>
+      <Size>18422</Size>
+      <Type>text/xml</Type>
+    </Asset>
+    <Asset>
+      <Id>urn:uuid:33333333-pic0-4bbb-8ccc-000000000003</Id>
+      <Hash>Ab12Cd34Ef56Gh78Ij90Kl12Mn34=</Hash>
+      <Size>41203847216</Size>
+      <Type>application/mxf</Type>
+    </Asset>
+    <Asset>
+      <Id>urn:uuid:44444444-snd0-4bbb-8ccc-000000000004</Id>
+      <Hash>Zx98Yw76Vu54Ts32Rq10Po98Nm76=</Hash>
+      <Size>2884561920</Size>
+      <Type>application/mxf</Type>
+    </Asset>
+    <Asset>
+      <Id>urn:uuid:55555555-sub0-4bbb-8ccc-000000000005</Id>
+      <Hash>Lm34Kj56Hg78Fd90Sa12Qw34Er56=</Hash>
+      <Size>1048576</Size>
+      <Type>application/mxf</Type>
+    </Asset>
+  </AssetList>
+</PackingList>
